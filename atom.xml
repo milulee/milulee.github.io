@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-11-14T15:09:01.670Z</updated>
+  <updated>2019-01-10T08:33:33.380Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Vue.js事件修饰符</title>
+    <link href="http://yoursite.com/2019/01/10/Vue-js%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6/"/>
+    <id>http://yoursite.com/2019/01/10/Vue-js事件修饰符/</id>
+    <published>2019-01-10T06:58:22.000Z</published>
+    <updated>2019-01-10T08:33:33.380Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p><h2 id="Vue-js事件修饰符的作用"><a href="#Vue-js事件修饰符的作用" class="headerlink" title="Vue.js事件修饰符的作用"></a>Vue.js事件修饰符的作用</h2><p>&emsp;&emsp;学习vue.js时，对事件修饰符充满疑惑，于是寻找了一下大家的理解，加以代码验证，才算是解决了我的疑问。<br><br>&emsp;&emsp;首先，事件修饰符有以下这些：</p><ul><li>.stop          &emsp;&emsp;//阻止事件继续传播</li><li>.prevent  &emsp;&emsp;//阻止页面重载</li><li>.capture  &emsp;&emsp;//添加事件侦听器时使用事件捕获模式，先在此先处理，再交由内部元素处理（若有多个该修饰符的元素则由外而内触发） </li><li>.self     &emsp;&emsp;//当事件在该元素本身（而不是子元素）触发时触发回调(即直接作用在该元素上的事件才可以执行) </li><li>.once    &emsp;&emsp;//事件只触发一次</li><li>.passive   &emsp;&emsp;//事件的默认行为立即触发</li></ul><h3 id="代码测试一：-once-prevent-capture-stop-self"><a href="#代码测试一：-once-prevent-capture-stop-self" class="headerlink" title="代码测试一： .once .prevent .capture .stop .self"></a>代码测试一： .once .prevent .capture .stop .self</h3><p>可以通过以下代码测试事件的传播顺序，以理解这些修饰符的功能。</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;meta charset=&quot;utf-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;title&gt;Modifiers&lt;/title&gt;    &lt;link rel=&quot;stylesheet&quot; href=&quot;&quot;&gt;    &lt;script src=&apos;https://cdn.staticfile.org/vue/2.4.2/vue.min.js&apos;&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;app&quot; @click=&quot;clickme&quot;&gt;   &lt;!--  &lt;section id=&quot;section&quot; @click.stop=&quot;clickme&quot;&gt; --&gt; &lt;section id=&quot;section&quot; @click.capture=&quot;clickme&quot;&gt;&lt;div id=&quot;div&quot; @click.prevent=&quot;clickme&quot;&gt;&lt;span id=&quot;span&quot; @click.self=&quot;clickme&quot;&gt;&lt;p id=&quot;p&quot; @click.once=&quot;clickme&quot;&gt;用鼠标双击我，看看事件的传递真正顺序。&lt;/p&gt;&lt;/span&gt;&lt;/div&gt;&lt;/section&gt;点击事件的响应顺序如下：{{message}}&lt;/div&gt;&lt;script&gt;var vm = new Vue({el: &apos;#app&apos;,data: {  message: &apos;&apos;},methods: {  clickme: function (event) {if (this.message === &apos;&apos;) {this.message = event.currentTarget.id} else {this.message = this.message + &apos;-&gt;&apos; + event.currentTarget.id}  }}})&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p><br><br>&emsp;&emsp;点击一次，会得到点击事件的响应顺序如下：<strong>section-&gt;p-&gt;div-&gt;app</strong><br>因为.capture先捕捉到点击事件，所以section执行clickme；然后再交由内部p处理，p中修饰符为.once，所以只执行一次clickme；传到span，.self判断是否是该元素本身触发，否，所以不执行clickme；传到id为div的div中，prevent阻止了其click事件触发的默认行为，但可以触发回调函数，所以div执行clickme；最后传到id=”app”的div中，执行clickme。<br><br><br>&emsp;&emsp;第二次点击，事件响应为：<strong>section-&gt;div-&gt;app</strong>，并之后每次点击都循环此响应，是因为p中含有.once修饰符，只会触发一次事件。<br><br></p><p>&emsp;&emsp;要测试.stop修饰符只需把上面代码的section 的 .capture修饰符改为 .stop，可以发现，当事件传到此处，section会触发clickme事件，但事件不会再往外传，在此处stop传播了。点击一次的事件的响应顺序如下：<strong>p-&gt;div-&gt;section</strong></p><h3 id="代码测试二：-prevent-self-emsp-emsp-self-prevent"><a href="#代码测试二：-prevent-self-emsp-emsp-self-prevent" class="headerlink" title="代码测试二： .prevent.self &emsp;&emsp; .self.prevent"></a>代码测试二： .prevent.self &emsp;&emsp; .self.prevent</h3><p>&emsp;&emsp;为了测试<strong>.prevent.self</strong>与 <strong>.self.prevent</strong>的区别，我们使用以下代码：</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;meta charset=&quot;utf-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;title&gt;Prevent修饰符&lt;/title&gt;    &lt;link rel=&quot;stylesheet&quot; href=&quot;&quot;&gt;    &lt;script src=&apos;https://cdn.staticfile.org/vue/2.4.2/vue.min.js&apos;&gt;&lt;/script&gt;&lt;/head&gt;&lt;body&gt;    &lt;div id=&quot;demo&quot; @click=&quot;clickme&quot;&gt;        &lt;a id=&quot;a&quot; href=&quot;/#&quot; @click.self.prevent=&quot;clickme&quot;&gt;        &lt;!-- &lt;a id=&quot;a&quot; href=&quot;/#&quot; @click.prevent.self=&quot;clickme&quot;&gt; --&gt;            &lt;span id=&quot;span&quot; @click=&quot;clickme&quot;&gt;点击我&lt;/span&gt;        &lt;/a&gt;        触发了哪些事件：{{message}}    &lt;/div&gt;    &lt;script&gt;    var vm = new Vue({        el: &quot;#demo&quot;,        data: {            message: &quot;&quot;        },        methods: {            clickme: function(event) {                if (this.message === &apos;&apos;) {                    this.message = event.currentTarget.id                } else {                    this.message = this.message + &apos;-&gt;&apos; + event.currentTarget.id                }            }        }    })    &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></pre><p>&emsp;&emsp;运行以上代码，在页面点击<span>的内容，会发现，<strong>.self.prevent</strong> 修饰符使得：页面闪过 “<strong>触发了哪些事件：span-&gt;demo</strong>“，然后以迅雷不及掩耳之势跳转到你的”/#”下，我的是根目录界面。在此贴上我的浅薄的理解：<a>&lt;a>标签中的 .self.prevent 修饰符首先判断，是否点击的是该元素，由于点击的是&lt;a>元素内的&lt;span>,所以不执行clickme；prevent在self之后，所以只有当本元素被点击时才阻止页面跳转，因此该页面依然会跳转至其目标页面。</a><br><br><br>&emsp;&emsp;将注释内容解注释，并注释原先的&lt;a>语句，改为测试 <strong>.prevent.self</strong> ,页面不跳转，并显示——</span></p><blockquote><p>点击我 触发了哪些事件：span-&gt;demo</p></blockquote><p>.prevent阻止了&lt;a>标签的跳转，而其后的.self修饰符决定是否执”clickme”事件：满足点击的是本元素，则执行”clickme”；不满足，则不执行。在以上代码中点击的是&lt;span>元素，所以未执行”clickme”事件。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul><li><strong>.prevent.self &emsp;&emsp;</strong> //阻止所有默认行为，必定不重载页面，而是否执行事件看是否满足.self</li><li><strong>.self.prevent  &emsp;&emsp;</strong> //阻止对自身的点击，如果点击的是自身，则不重载页面，但会执行事件；如果不是，重载页面，不执行事件。</li><li><strong>.stop</strong> &emsp;&emsp;//阻止事件向上传播，在此stop。</li><li><strong>.prevent</strong> &emsp;&emsp;//阻止默认行为</li><li><strong>.capture</strong> &emsp;&emsp;//捕捉事件，先在此处理，后交由内部元素处理</li><li><strong>.once</strong> &emsp;&emsp;//事件只触发一次</li><li><strong>.self</strong> &emsp;&emsp;//当事件在该元素本身（而不是子元素）触发时触发回调(即直接作用在该元素上的事件才可以执行) </li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Vue-js事件修饰符的作用&quot;&gt;&lt;a href=&quot;#Vue-js事件修饰符的作用&quot; class=&quot;headerlink&quot; title=&quot;Vue.js事件修饰符的作用&quot;&gt;&lt;/a&gt;Vue.js事件修饰符的作用&lt;/h2&gt;&lt;p&gt;&amp;emsp;&amp;ems
+      
+    
+    </summary>
+    
+    
+      <category term="vue.js" scheme="http://yoursite.com/tags/vue-js/"/>
+    
+  </entry>
   
   <entry>
     <title>First blog</title>
