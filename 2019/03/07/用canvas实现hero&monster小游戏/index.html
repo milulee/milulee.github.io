@@ -81,18 +81,22 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="创建画布–创建canvas元素并设置其宽高属性，最后添加至&amp;lt;body&amp;gt;标签后  document.createElement()  canvas.getContext(&amp;quot;2d&amp;quot;) canvas.width/canvas.height   准备图片–创建图片对象，声明图片加载flag，设置图片src属性  new Image() bgImage.onload = {">
 <meta name="keywords" content="Milu,Lee,麋鹿的博客，Milulee，JavaScript，HTML，CSS，One plus，1+">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2018/11/14/hello-world/index.html">
+<meta property="og:title" content="Milu&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/2019/03/07/用canvas实现hero&monster小游戏/index.html">
 <meta property="og:site_name" content="Milu&#39;s Blog">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="创建画布–创建canvas元素并设置其宽高属性，最后添加至&amp;lt;body&amp;gt;标签后  document.createElement()  canvas.getContext(&amp;quot;2d&amp;quot;) canvas.width/canvas.height   准备图片–创建图片对象，声明图片加载flag，设置图片src属性  new Image() bgImage.onload = {">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-14T07:25:33.576Z">
+<meta property="og:image" content="https://i.imgur.com/PC0A0O0.png">
+<meta property="og:image" content="https://i.imgur.com/JfExtZp.png">
+<meta property="og:image" content="https://i.imgur.com/TWnP191.png">
+<meta property="og:updated_time" content="2019-03-07T06:05:15.107Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Milu&#39;s Blog">
+<meta name="twitter:description" content="创建画布–创建canvas元素并设置其宽高属性，最后添加至&amp;lt;body&amp;gt;标签后  document.createElement()  canvas.getContext(&amp;quot;2d&amp;quot;) canvas.width/canvas.height   准备图片–创建图片对象，声明图片加载flag，设置图片src属性  new Image() bgImage.onload = {">
+<meta name="twitter:image" content="https://i.imgur.com/PC0A0O0.png">
 
 
 
@@ -122,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/14/hello-world/">
+  <link rel="canonical" href="http://yoursite.com/2019/03/07/用canvas实现hero&monster小游戏/">
 
 
 
 
 
-  <title>Hello World | Milu's Blog</title>
+  <title> | Milu's Blog</title>
   
 
 
@@ -255,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/用canvas实现hero&monster小游戏/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Milu Lee">
@@ -272,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -284,8 +288,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T15:25:33+08:00">
-                2018-11-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T13:57:35+08:00">
+                2019-03-07
               </time>
             
 
@@ -322,15 +326,226 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <ol>
+<li><p>创建画布–创建<code>canvas</code>元素并设置其宽高属性，最后添加至<code>&lt;body&gt;</code>标签后</p>
+<ul>
+<li><code>document.createElement()</code> </li>
+<li><code>canvas.getContext(&quot;2d&quot;)</code></li>
+<li><code>canvas.width/canvas.height</code></li>
+</ul>
+</li>
+<li><p>准备图片–创建图片对象，声明图片加载flag，设置图片<code>src</code>属性</p>
+<ul>
+<li><code>new Image()</code></li>
+<li><code>bgImage.onload = {}</code></li>
+<li><code>bgImage.src</code></li>
+</ul>
+</li>
+<li><p>游戏对象–创建英雄、怪物对象。英雄有个<code>speed</code>属性控制他每秒移动多少像素。用<code>monsterCaught</code>存储怪物被捉住的次数，初始值为0</p>
+<ul>
+<li><code>hero</code></li>
+<li><code>monster</code></li>
+<li><code>monsterCaught</code></li>
+</ul>
+</li>
+<li><p>处理用户的输入–先保存用户的输入至<code>keysDown</code>对象，稍后再做相应处理</p>
+<ul>
+<li><code>keysDown</code></li>
+<li><code>addEventLinstener()</code></li>
+</ul>
+</li>
+<li><p>开始一轮游戏–用<code>reset</code>开始一轮新的游戏，每次将怪物放到一个随机的地方</p>
+<ul>
+<li><code>hero.x/hero.y</code></li>
+<li><code>reset=function(){}</code></li>
+<li><code>monster.x/monster.y</code></li>
+</ul>
+</li>
+<li><p>更新对象–更新<code>hero</code>的坐标，控制其移动，判断<code>hero</code>是否抓到<code>monster</code>，抓到就<code>reset()</code>。传入<code>modifier</code>变量，<code>update</code>在<code>main</code>函数调用</p>
+<ul>
+<li><code>update=function(){}</code></li>
+<li><code>if(38/39/40/37 in keysDown)</code></li>
+<li><code>if（）</code>//判断是否抓到</li>
+</ul>
+</li>
+<li><p>渲染物体–之前的代码都是准备前期工作和处理游戏状态等，接下去需要把所以东西画出来。先画背景图，再画人物。调用<code>fillText</code>绘制文字。绘制部分完成！</p>
+<ul>
+<li><code>render=function(){}</code> //image ready了，才画进去</li>
+<li><code>cxt.drawImage(image,x,y)</code> //之前计算得到的<code>hero.x/y</code>,<code>monster.x/y</code>,此处渲染的时候可用。</li>
+<li><code>fillStyle/font/textAlign/textBaseline/fillText(&quot;&quot;,x,y)</code></li>
+</ul>
+</li>
+<li><p>主循环函数–实现游戏的循环结构，将它放在<code>main</code>里。先拿到时间差，将时间差/1000，传入<code>update()</code>函数，再<code>render()</code>，并将本次的时间保存下来。最后用<code>requestAnimationFrame(main)</code>循环函数。</p>
+<ul>
+<li><code>main=function(){}</code></li>
+<li><code>requestAnimationFrame()</code></li>
+</ul>
+</li>
+<li><p>设置<code>requestAnimationFrame()</code>–浏览器兼容性的解决</p>
+<ul>
+<li><code>var w=window;</code></li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requestAnimationFrame = w.requestAnimationFrame ||w.webkitRequestAnimationFrame ||w.msRequestAnimationFrame || w.mozRequestAnimationFrame;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>最后启动游戏</p>
+<ul>
+<li><code>then</code></li>
+<li><code>reset()</code></li>
+<li><code>main()</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="HTML-code"><a href="#HTML-code" class="headerlink" title="HTML code"></a>HTML code</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot;&gt;
+        &lt;title&gt;Simple Canvas Game&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script src=&quot;js/game.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="JS-code"><a href="#JS-code" class="headerlink" title="JS code"></a>JS code</h3><pre><code>var canvas = document.createElement(&quot;canvas&quot;);
+var ctx = canvas.getContext(&quot;2d&quot;);
+canvas.width = 512;
+canvas.height = 480;
+document.body.appendChild(canvas);
+
+//Background image
+var bgReady = false;
+var bgImage = new Image();
+bgImage.onload = function(){
+    bgReady = true;
+};
+bgImage.src = &quot;images/background.png&quot;;
+
+//hero image
+var heroReady = false;
+var heroImage = new Image();
+heroImage.onload = function(){
+    heroReady = true;
+};
+heroImage.src = &quot;images/hero.png&quot;;
+
+//monster image
+var monsterReady = false;
+var monsterImage = new Image();
+monsterImage.onload = function(){
+    monsterReady = true;
+};
+monsterImage.src = &quot;images/monster.png&quot;;
+
+var hero = {
+    speed:256 //movement in pixels per second
+};
+var monster = {};
+var monsterCaught = 0;
+
+
+//handle keyboard controls
+var keysDown = {};
+
+addEventListener(&quot;keydown&quot;,function(e){
+    keysDown[e.keyCode] = true;
+},false);
+
+addEventListener(&quot;keyup&quot;,function(e){
+    delete keysDown[e.keyCode];
+},false);
+
+hero.x = canvas.width/2;
+hero.y = canvas.height/2;
+
+var reset = function(){
+    //Throw the monster somewhere on the screen randomly
+    monster.x = 32 + (Math.random() * (canvas.width - 64));
+    monster.y = 32 + (Math.random() * (canvas.height - 64))
+};
+
+var update = function(modifier){
+    if (38 in keysDown){//player holding up
+        hero.y -= hero.speed * modifier;
+    }
+    if (40 in keysDown){//down
+        hero.y += hero.speed * modifier;
+    }
+    if (37 in keysDown){//left
+        hero.x -= hero.speed * modifier;
+    }
+    if (39 in keysDown){//right
+        hero.x += hero.speed * modifier;
+    }
+
+    //保持英雄一直在画布里面。左右不互通，上下互通。
+    if(hero.x &gt; canvas.width-32){
+        hero.x = canvas.width-32;
+    }
+    if(hero.x &lt; 0){
+        hero.x = 0;
+    }
+    if(hero.y &gt; canvas.height){
+        hero.y = 0;
+    }
+    if(hero.y &lt; 0){
+        hero.y = canvas.height;
+    }
+
+
+    //are they touching?
+    if(
+        hero.x &lt;= (monster.x + 31)
+        &amp;&amp; monster.x &lt;= (hero.x + 31)
+        &amp;&amp; hero.y &lt;= (monster.y +32)
+        &amp;&amp; monster.y &lt;= (hero.y + 32)
+    ){
+        ++monsterCaught;
+        reset();
+    }
+};
+
+//Draw everything
+var render = function(){
+    if (bgReady){
+        ctx.drawImage(bgImage,0,0);
+    }
+    if(heroReady){
+        ctx.drawImage(heroImage,hero.x,hero.y);
+    }
+    if(monsterReady){
+        ctx.drawImage(monsterImage,monster.x,monster.y);
+    }
+
+    //score
+    ctx.fillStyle = &quot;rgb(250,250,250)&quot;;
+    ctx.font = &quot;24px Helvetica&quot;;
+    ctx.textAlign = &quot;left&quot;;
+    ctx.textBaseline = &quot;top&quot;;
+    ctx.fillText(&quot;Goblins caught:&quot; + monsterCaught,32, 32);
+};
+
+//The main game loop
+var main = function(){
+    var now = Date.now();
+
+    var delta = now - then;
+    //console.log(delta);
+    update(delta/1000);
+    render();
+
+    then = now;
+
+    //request to do this again ASAP
+    requestAnimationFrame(main);
+};
+
+var w = window;
+requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
+var then = Date.now();
+reset();
+main();
+</code></pre><h3 id="Photos"><a href="#Photos" class="headerlink" title="Photos"></a>Photos</h3><p><img src="https://i.imgur.com/PC0A0O0.png" alt="background.png"><br><img src="https://i.imgur.com/JfExtZp.png" alt="hero.png"><br><img src="https://i.imgur.com/TWnP191.png" alt="monster.png"></p>
 
       
     </div>
@@ -355,15 +570,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/01/10/Vue-js事件修饰符/" rel="next" title="Vue.js事件修饰符">
+                <i class="fa fa-chevron-left"></i> Vue.js事件修饰符
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/14/test-my-site/" rel="prev" title="test_my_site">
-                test_my_site <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -495,7 +710,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-code"><span class="nav-number">1.</span> <span class="nav-text">HTML code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-code"><span class="nav-number">2.</span> <span class="nav-text">JS code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Photos"><span class="nav-number">3.</span> <span class="nav-text">Photos</span></a></li></ol></div>
             
 
           </div>
