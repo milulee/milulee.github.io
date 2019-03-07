@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JavaScript,canvas,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Milu's Blog" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="小游戏创建流程 创建画布–创建canvas元素并设置其宽高属性，最后添加至&amp;lt;body&amp;gt;标签后  document.createElement()  canvas.getContext(&amp;quot;2d&amp;quot;) canvas.width/canvas.height   准备图片–创建图片对象，声明图片加载flag，设置图片src属性  new Image() bgImage.on">
+<meta name="keywords" content="JavaScript,canvas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="canvas实现小游戏">
+<meta property="og:url" content="http://yoursite.com/2019/03/07/canvas实现小游戏/index.html">
+<meta property="og:site_name" content="Milu&#39;s Blog">
+<meta property="og:description" content="小游戏创建流程 创建画布–创建canvas元素并设置其宽高属性，最后添加至&amp;lt;body&amp;gt;标签后  document.createElement()  canvas.getContext(&amp;quot;2d&amp;quot;) canvas.width/canvas.height   准备图片–创建图片对象，声明图片加载flag，设置图片src属性  new Image() bgImage.on">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/PC0A0O0.png">
+<meta property="og:image" content="https://i.imgur.com/JfExtZp.png">
+<meta property="og:image" content="https://i.imgur.com/TWnP191.png">
+<meta property="og:updated_time" content="2019-03-07T06:39:22.967Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="canvas实现小游戏">
+<meta name="twitter:description" content="小游戏创建流程 创建画布–创建canvas元素并设置其宽高属性，最后添加至&amp;lt;body&amp;gt;标签后  document.createElement()  canvas.getContext(&amp;quot;2d&amp;quot;) canvas.width/canvas.height   准备图片–创建图片对象，声明图片加载flag，设置图片src属性  new Image() bgImage.on">
+<meta name="twitter:image" content="https://i.imgur.com/PC0A0O0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/07/canvas实现小游戏/">
+
+
+
+
+
+  <title>canvas实现小游戏 | Milu's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Milu's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">web前端、深度学习</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/canvas实现小游戏/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Milu Lee">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Milu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">canvas实现小游戏</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T14:32:10+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><br></p>
+<h2 id="小游戏创建流程"><a href="#小游戏创建流程" class="headerlink" title="小游戏创建流程"></a>小游戏创建流程</h2><ol>
+<li><p>创建画布–创建<code>canvas</code>元素并设置其宽高属性，最后添加至<code>&lt;body&gt;</code>标签后</p>
+<ul>
+<li><code>document.createElement()</code> </li>
+<li><code>canvas.getContext(&quot;2d&quot;)</code></li>
+<li><code>canvas.width/canvas.height</code></li>
+</ul>
+</li>
+<li><p>准备图片–创建图片对象，声明图片加载flag，设置图片<code>src</code>属性</p>
+<ul>
+<li><code>new Image()</code></li>
+<li><code>bgImage.onload = {}</code></li>
+<li><code>bgImage.src</code></li>
+</ul>
+</li>
+<li><p>游戏对象–创建英雄、怪物对象。英雄有个<code>speed</code>属性控制他每秒移动多少像素。用<code>monsterCaught</code>存储怪物被捉住的次数，初始值为0</p>
+<ul>
+<li><code>hero</code></li>
+<li><code>monster</code></li>
+<li><code>monsterCaught</code></li>
+</ul>
+</li>
+<li><p>处理用户的输入–先保存用户的输入至<code>keysDown</code>对象，稍后再做相应处理</p>
+<ul>
+<li><code>keysDown</code></li>
+<li><code>addEventLinstener()</code></li>
+</ul>
+</li>
+<li><p>开始一轮游戏–用<code>reset</code>开始一轮新的游戏，每次将怪物放到一个随机的地方</p>
+<ul>
+<li><code>hero.x/hero.y</code></li>
+<li><code>reset=function(){}</code></li>
+<li><code>monster.x/monster.y</code></li>
+</ul>
+</li>
+<li><p>更新对象–更新<code>hero</code>的坐标，控制其移动，判断<code>hero</code>是否抓到<code>monster</code>，抓到就<code>reset()</code>。传入<code>modifier</code>变量，<code>update</code>在<code>main</code>函数调用</p>
+<ul>
+<li><code>update=function(){}</code></li>
+<li><code>if(38/39/40/37 in keysDown)</code></li>
+<li><code>if（）</code>//判断是否抓到</li>
+</ul>
+</li>
+<li><p>渲染物体–之前的代码都是准备前期工作和处理游戏状态等，接下去需要把所以东西画出来。先画背景图，再画人物。调用<code>fillText</code>绘制文字。绘制部分完成！</p>
+<ul>
+<li><code>render=function(){}</code> //image ready了，才画进去</li>
+<li><code>cxt.drawImage(image,x,y)</code> //之前计算得到的<code>hero.x/y</code>,<code>monster.x/y</code>,此处渲染的时候可用。</li>
+<li><code>fillStyle/font/textAlign/textBaseline/fillText(&quot;&quot;,x,y)</code></li>
+</ul>
+</li>
+<li><p>主循环函数–实现游戏的循环结构，将它放在<code>main</code>里。先拿到时间差，将时间差/1000，传入<code>update()</code>函数，再<code>render()</code>，并将本次的时间保存下来。最后用<code>requestAnimationFrame(main)</code>循环函数。</p>
+<ul>
+<li><code>main=function(){}</code></li>
+<li><code>requestAnimationFrame()</code></li>
+</ul>
+</li>
+<li><p>设置<code>requestAnimationFrame()</code>–浏览器兼容性的解决</p>
+<ul>
+<li><code>var w=window;</code></li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">requestAnimationFrame = w.requestAnimationFrame ||w.webkitRequestAnimationFrame ||w.msRequestAnimationFrame || w.mozRequestAnimationFrame;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>最后启动游戏</p>
+<ul>
+<li><code>then</code></li>
+<li><code>reset()</code></li>
+<li><code>main()</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="代码-amp-图片"><a href="#代码-amp-图片" class="headerlink" title="代码&amp;图片"></a>代码&amp;图片</h2><h3 id="HTML-code"><a href="#HTML-code" class="headerlink" title="HTML code"></a>HTML code</h3><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Simple Canvas Game&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script src=&quot;js/game.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h3 id="JS-code"><a href="#JS-code" class="headerlink" title="JS code"></a>JS code</h3><pre><code>var canvas = document.createElement(&quot;canvas&quot;);
+var ctx = canvas.getContext(&quot;2d&quot;);
+canvas.width = 512;
+canvas.height = 480;
+document.body.appendChild(canvas);
+
+//Background image
+var bgReady = false;
+var bgImage = new Image();
+bgImage.onload = function(){
+    bgReady = true;
+};
+bgImage.src = &quot;images/background.png&quot;;
+
+//hero image
+var heroReady = false;
+var heroImage = new Image();
+heroImage.onload = function(){
+    heroReady = true;
+};
+heroImage.src = &quot;images/hero.png&quot;;
+
+//monster image
+var monsterReady = false;
+var monsterImage = new Image();
+monsterImage.onload = function(){
+    monsterReady = true;
+};
+monsterImage.src = &quot;images/monster.png&quot;;
+
+var hero = {
+    speed:256 //movement in pixels per second
+};
+var monster = {};
+var monsterCaught = 0;
+
+
+//handle keyboard controls
+var keysDown = {};
+
+addEventListener(&quot;keydown&quot;,function(e){
+    keysDown[e.keyCode] = true;
+},false);
+
+addEventListener(&quot;keyup&quot;,function(e){
+    delete keysDown[e.keyCode];
+},false);
+
+hero.x = canvas.width/2;
+hero.y = canvas.height/2;
+
+var reset = function(){
+    //Throw the monster somewhere on the screen randomly
+    monster.x = 32 + (Math.random() * (canvas.width - 64));
+    monster.y = 32 + (Math.random() * (canvas.height - 64))
+};
+
+var update = function(modifier){
+    if (38 in keysDown){//player holding up
+        hero.y -= hero.speed * modifier;
+    }
+    if (40 in keysDown){//down
+        hero.y += hero.speed * modifier;
+    }
+    if (37 in keysDown){//left
+        hero.x -= hero.speed * modifier;
+    }
+    if (39 in keysDown){//right
+        hero.x += hero.speed * modifier;
+    }
+
+    //保持英雄一直在画布里面。左右不互通，上下互通。
+    if(hero.x &gt; canvas.width-32){
+        hero.x = canvas.width-32;
+    }
+    if(hero.x &lt; 0){
+        hero.x = 0;
+    }
+    if(hero.y &gt; canvas.height){
+        hero.y = 0;
+    }
+    if(hero.y &lt; 0){
+        hero.y = canvas.height;
+    }
+
+
+    //are they touching?
+    if(
+        hero.x &lt;= (monster.x + 31)
+        &amp;&amp; monster.x &lt;= (hero.x + 31)
+        &amp;&amp; hero.y &lt;= (monster.y +32)
+        &amp;&amp; monster.y &lt;= (hero.y + 32)
+    ){
+        ++monsterCaught;
+        reset();
+    }
+};
+
+//Draw everything
+var render = function(){
+    if (bgReady){
+        ctx.drawImage(bgImage,0,0);
+    }
+    if(heroReady){
+        ctx.drawImage(heroImage,hero.x,hero.y);
+    }
+    if(monsterReady){
+        ctx.drawImage(monsterImage,monster.x,monster.y);
+    }
+
+    //score
+    ctx.fillStyle = &quot;rgb(250,250,250)&quot;;
+    ctx.font = &quot;24px Helvetica&quot;;
+    ctx.textAlign = &quot;left&quot;;
+    ctx.textBaseline = &quot;top&quot;;
+    ctx.fillText(&quot;Goblins caught:&quot; + monsterCaught,32, 32);
+};
+
+//The main game loop
+var main = function(){
+    var now = Date.now();
+
+    var delta = now - then;
+    //console.log(delta);
+    update(delta/1000);
+    render();
+
+    then = now;
+
+    //request to do this again ASAP
+    requestAnimationFrame(main);
+};
+
+var w = window;
+requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
+var then = Date.now();
+reset();
+main();
+</code></pre><h3 id="Photos"><a href="#Photos" class="headerlink" title="Photos"></a>Photos</h3><p><img src="https://i.imgur.com/PC0A0O0.png" alt="background.png"><br><img src="https://i.imgur.com/JfExtZp.png" alt="hero.png"><br><img src="https://i.imgur.com/TWnP191.png" alt="monster.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript-canvas/" rel="tag"># JavaScript,canvas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/10/Vue-js事件修饰符/" rel="next" title="Vue.js事件修饰符">
+                <i class="fa fa-chevron-left"></i> Vue.js事件修饰符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="Milu Lee">
+            
+              <p class="site-author-name" itemprop="name">Milu Lee</p>
+              <p class="site-description motion-element" itemprop="description">我也不想这么样 起起伏伏</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小游戏创建流程"><span class="nav-number">1.</span> <span class="nav-text">小游戏创建流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码-amp-图片"><span class="nav-number">2.</span> <span class="nav-text">代码&amp;图片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML-code"><span class="nav-number">2.1.</span> <span class="nav-text">HTML code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-code"><span class="nav-number">2.2.</span> <span class="nav-text">JS code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Photos"><span class="nav-number">2.3.</span> <span class="nav-text">Photos</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Milu Lee</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
